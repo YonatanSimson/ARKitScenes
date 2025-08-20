@@ -232,7 +232,7 @@ class TenFpsDataLoader(object):
             depth_images = sorted(glob.glob(os.path.join(depth_folder, "*.png")))
             self.frame_ids = [os.path.basename(x) for x in depth_images]
             self.frame_ids = [x.split(".png")[0].split("_")[1] for x in self.frame_ids]
-            self.video_id = depth_folder.split('/')[-3]
+            self.video_id = depth_folder.split(os.path.sep)[-3]
             self.frame_ids = [x for x in self.frame_ids]
             self.frame_ids.sort()
             self.intrinsics = {}
@@ -336,8 +336,8 @@ class TenFpsDataLoader(object):
                     frame_pose = np.array(self.poses[str(my_key)])
         frame["pose"] = copy.deepcopy(frame_pose)
 
-        im_height_scale = np.float(depth_height) / im_height
-        im_width_scale = np.float(depth_width) / im_width
+        im_height_scale = np.float32(depth_height) / im_height
+        im_width_scale = np.float32(depth_width) / im_width
 
         if depth_height != im_height:
             frame["image"] = np.zeros([depth_height, depth_width, 3])  # 288, 384, 3

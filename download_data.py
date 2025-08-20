@@ -53,7 +53,7 @@ def download_file(url, file_name, dst):
     filepath = os.path.join(dst, file_name)
 
     if not os.path.isfile(filepath):
-        command = f"curl {url} -o {file_name}.tmp --fail"
+        command = f"curl {url} -o {file_name}.tmp --fail --insecure"
         print(f"Downloading file {filepath}")
         try:
             subprocess.check_call(command, shell=True, cwd=dst)
@@ -69,9 +69,11 @@ def download_file(url, file_name, dst):
 def unzip_file(file_name, dst, keep_zip=True):
     filepath = os.path.join(dst, file_name)
     print(f"Unzipping zip file {filepath}")
-    command = f"unzip -oq {filepath} -d {dst}"
     try:
-        subprocess.check_call(command, shell=True)
+        import zipfile
+        with zipfile.ZipFile(filepath, 'r') as zip_ref:
+            zip_ref.extractall(dst)
+        print(f"Successfully extracted {filepath}")
     except Exception as error:
         print(f'Error unzipping {filepath}, error: {error}')
         return False

@@ -98,7 +98,7 @@ python data_prepare_offline.py \
        --data_root /tmp/raw_ARKitScenes/3dod/Training/ \
        --scene_id 41254925 \
        --gt_path /tmp/raw_ARKitScenes/3dod/Training/41254925/41254925_3dod_annotation.json \
-       --output_dir /tmp/raw_ARKitScenes/3dod/Training/41254925/41254925_offline_prepared_data/ \
+       --output_dir /tmp/raw_ARKitScenes/3dod/Training/offline_prepared_data/ \
        --vis
 ```
 The codes go through the video and accumulate the point cloud in each frame with a consistent coordinate system ("world coordinate") by leveraging intrinsic and extrinsic camera information. The label is in the same "world coordinate".
