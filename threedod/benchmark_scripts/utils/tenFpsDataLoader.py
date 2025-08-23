@@ -294,6 +294,29 @@ class TenFpsDataLoader(object):
     def __len__(self):
         return len(self.frame_ids)
 
+    def get_frame_ids(self):
+        return self.frame_ids
+    
+    def get_frame_pose(self, frame_id):
+        return self.poses[frame_id]
+    
+    def get_frame_intrinsics(self, frame_id):
+        return self.intrinsics[frame_id]
+    
+    def get_frame_with_ts(self, frame_ts):
+        # get index of frame at ts
+        if frame_ts in self.frame_ids:
+            frame_id = self.frame_ids.index(frame_ts)
+        else:
+            print(f"Timestamp {frame_ts} not found")
+            return None
+
+        frame = self.__getitem__(frame_id)
+        return frame
+    
+    def get_frame_color(self, frame_id):
+        return self.colors[frame_id]
+
     def __getitem__(self, idx):
         """
         Returns:
